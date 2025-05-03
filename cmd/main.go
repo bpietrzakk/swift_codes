@@ -27,6 +27,7 @@ func main() {
 	// add endopints
 
 	api.RegisterEndpoint1(r) // endpoint 1
+	api.RegisterEndpoint2(r) // endpoint 2
 
 	r.GET("/hello", func(c *gin.Context) {
 		// var example []models.SwiftCode

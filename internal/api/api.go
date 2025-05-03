@@ -3,7 +3,7 @@ package api
 import (
 	"errors"
 	"unicode/utf8"
-
+	"fmt"
 	"github.com/bpietrzakk/swift_codes/internal/database"
 	"github.com/bpietrzakk/swift_codes/internal/models"
 	"github.com/bpietrzakk/swift_codes/internal/responses"
@@ -58,8 +58,30 @@ func RegisterEndpoint1(r *gin.Engine) {
 	})
 }
 
-// func RegisterEndpoint2(r *gin.Engine){
-// 	r.GET("/v1/swift-codes/country/:countryISO2code", func(c *gin.Context) {
+func RegisterEndpoint2(r *gin.Engine){
+	r.GET("/v1/swift-codes/country/:countryISO2code", func(c *gin.Context) {
+		countryISO2 := c.Param("countryISO2code") 
 
-// 	})
-// }
+		// check if iso2 has 2 charakters
+		if utf8.RuneCountInString(countryISO2) != 2 {
+			c.JSON(400, gin.H{"error": "swift code must have 11 characters"})
+            return
+		}
+		var wanted_swift []models.SwiftCode
+
+		fmt.Println("Searching for countryISO2:", countryISO2)
+
+		result := database.DB.Where("country_ISO2 = ?", countryISO2).Find(&wanted_swift)
+		if result.RowsAffected == 0 {
+			c.JSON(404, gin.H{"error": "No Swift codes found for this country"})
+			return
+		}
+		if result.Error != nil {
+			c.JSON(500, gin.H{"error": "Database error"})
+            return
+		}
+
+		response := responses.BuildEndpoint2Response(countryISO2, wanted_swift[0].CountryName, wanted_swift)
+		c.JSON(200, response)
+	})
+}
