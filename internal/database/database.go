@@ -8,6 +8,7 @@ import (
 	"gorm.io/driver/postgres"
 	"github.com/joho/godotenv"
 	"github.com/bpietrzakk/swift_codes/internal/models"
+	"gorm.io/gorm/clause"
 )
 
 var DB *gorm.DB
@@ -39,4 +40,11 @@ func Connect() {
 
 	DB = db
 	log.Println(("Polaczono z PostgreSQL i wykonano migracje"))
+}
+
+func LoadSwiftCodesToDB(data []models.SwiftCode){
+	for _, record := range data {
+		DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&record)
+	}
+	fmt.Println("data has loaded to database! ")
 }

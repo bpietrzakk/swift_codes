@@ -2,40 +2,39 @@ package main
 
 import (
 	//"fmt"
-	"fmt"
-
-	"github.com/gin-gonic/gin"
-	//"github.com/bpietrzakk/swift_codes/internal/models"
+	"github.com/bpietrzakk/swift_codes/internal/api"
 	"github.com/bpietrzakk/swift_codes/internal/database"
-	"github.com/bpietrzakk/swift_codes/internal/models"
 	"github.com/bpietrzakk/swift_codes/internal/parser"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	database.Connect() // connect to database and create tables in database
 
 	// parse the data from csv data
-	parserData , err := parser.ParseSwiftCodesCSV("../internal/data/test.csv")
+	parserData , err := parser.ParseSwiftCodesCSV("internal/data/Interns_2025_SWIFT_CODES - Sheet1.csv")
 	if err != nil {
 		panic(err)
 	}
 
-	for _, record := range parserData {
-		database.DB.Create(&record)
-	}
-	fmt.Println("data has loaded to database! ")
+	database.LoadSwiftCodesToDB(parserData)
 
 
-
-
+	// --------------API--------------
 	// start api
 	r := gin.Default()
 
-	// simple endpoint 
-	r.GET("/", func(c *gin.Context) {
-		var example []models.SwiftCode
-		database.DB.Limit(1).Find(&example)
-		c.JSON(200, example)
+	// add endopints
+
+	api.RegisterEndpoint1(r) // endpoint 1
+
+	r.GET("/hello", func(c *gin.Context) {
+		// var example []models.SwiftCode
+		// database.DB.Limit(1).Find(&example)
+		// c.JSON(200, example)
+		c.JSON(200, gin.H{
+			"message":"Witaj świecie!",
+		})
 	})
 
 	r.Run(":8080")
