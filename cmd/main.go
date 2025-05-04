@@ -26,8 +26,10 @@ func main() {
 
 	// add endopints
 
-	api.RegisterEndpoint1(r) // endpoint 1
-	api.RegisterEndpoint2(r) // endpoint 2
+	api.RegisterEndpoint1(r) // endpoint 1 GET (by swiftcode)
+	api.RegisterEndpoint2(r) // endpoint 2 GET (by country)
+	api.RegisterEndpoint3(r) // endpoint 3 POST (add record)
+	api.RegisterEndpoint4(r) // endpoint 4 DELETE (by swiftcode)
 
 	r.GET("/hello", func(c *gin.Context) {
 		// var example []models.SwiftCode

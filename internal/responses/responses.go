@@ -6,28 +6,41 @@ import (
 
 // struct for headquarter (PROBLEM: branches show up as a center field)
 type Endpoint1_Headquarter struct {
-	Address string `json:"address"`
-	BankName string `json:"bankName"`
-	CountryISO2 string `json:"countryISO2"`
-	CountryName string `json:"countryName"`
-	IsHeadquarter bool `json:"isHeadquarter"`
-	SwiftCode string `json:"swiftCode"`
-	Branches []attached_swift `json:"branches"`
+	Address       string           `json:"address"`
+	BankName      string           `json:"bankName"`
+	CountryISO2   string           `json:"countryISO2"`
+	CountryName   string           `json:"countryName"`
+	IsHeadquarter bool             `json:"isHeadquarter"`
+	SwiftCode     string           `json:"swiftCode"`
+	Branches      []attached_swift `json:"branches"`
 }
 
 // struct for branches, which are attached to headquarter
 type attached_swift struct {
-	Address string `json:"address"`
-	BankName string `json:"bankName"`
-	CountryISO2 string `json:"countryISO2"`
-	IsHeadquarter bool `json:"isHeadquarter"`
-	SwiftCode string `json:"swiftCode"`
+	Address       string `json:"address"`
+	BankName      string `json:"bankName"`
+	CountryISO2   string `json:"countryISO2"`
+	IsHeadquarter bool   `json:"isHeadquarter"`
+	SwiftCode     string `json:"swiftCode"`
 }
 
 type Endpoint2 struct {
-	CountryISO2 string `json:"countryISO2"`
-	CountryName string `json:"countryName"`
-	SwiftCodes []attached_swift `json:"swiftCodes"`
+	CountryISO2 string           `json:"countryISO2"`
+	CountryName string           `json:"countryName"`
+	SwiftCodes  []attached_swift `json:"swiftCodes"`
+}
+
+type Endpoint3_request struct {
+	Address       string `json:"address"`
+	BankName      string `json:"bankName"`
+	CountryISO2   string `json:"countryISO2"`
+	CountryName   string `json:"countryName"`
+	IsHeadquarter bool   `json:"isHeadquarter"`
+	SwiftCode     string `json:"swiftCode"`
+}
+
+type Message_response struct {
+	Message string `json:"message"`
 }
 
 // // single branch response
@@ -44,11 +57,11 @@ func Build_HQB_response(headquarter_SC models.SwiftCode, branches []models.Swift
 	var branchList []attached_swift
 	for _, b := range branches {
 		branchList = append(branchList, attached_swift{
-			Address: b.Address,
-			BankName: b.BankName,
-			CountryISO2: b.CountryISO2,
+			Address:       b.Address,
+			BankName:      b.BankName,
+			CountryISO2:   b.CountryISO2,
 			IsHeadquarter: b.IsHeadquarter,
-			SwiftCode: b.SwiftCode,
+			SwiftCode:     b.SwiftCode,
 		})
 	}
 	return Endpoint1_Headquarter{
@@ -66,17 +79,16 @@ func BuildEndpoint2Response(countryISO2, countryName string, swiftCodes []models
 	var swiftCodesResponse []attached_swift
 	for _, c := range swiftCodes {
 		swiftCodesResponse = append(swiftCodesResponse, attached_swift{
-			Address: c.Address,
-			BankName: c.BankName,
-			CountryISO2: c.CountryISO2,
+			Address:       c.Address,
+			BankName:      c.BankName,
+			CountryISO2:   c.CountryISO2,
 			IsHeadquarter: c.IsHeadquarter,
-			SwiftCode: c.SwiftCode,
+			SwiftCode:     c.SwiftCode,
 		})
 	}
 	return Endpoint2{
 		CountryISO2: countryISO2,
 		CountryName: countryName,
-		SwiftCodes: swiftCodesResponse,
+		SwiftCodes:  swiftCodesResponse,
 	}
 }
-
