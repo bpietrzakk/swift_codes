@@ -6,17 +6,17 @@ import (
 
 // struct for headquarter (PROBLEM: branches show up as a center field)
 type Endpoint1_Headquarter struct {
-	Address       string           `json:"address"`
-	BankName      string           `json:"bankName"`
-	CountryISO2   string           `json:"countryISO2"`
-	CountryName   string           `json:"countryName"`
-	IsHeadquarter bool             `json:"isHeadquarter"`
-	SwiftCode     string           `json:"swiftCode"`
-	Branches      []attached_swift `json:"branches"`
+	Address       string          `json:"address"`
+	BankName      string          `json:"bankName"`
+	CountryISO2   string          `json:"countryISO2"`
+	CountryName   string          `json:"countryName"`
+	IsHeadquarter bool            `json:"isHeadquarter"`
+	SwiftCode     string          `json:"swiftCode"`
+	Branches      []AttachedSwift `json:"branches"`
 }
 
 // struct for branches, which are attached to headquarter
-type attached_swift struct {
+type AttachedSwift struct {
 	Address       string `json:"address"`
 	BankName      string `json:"bankName"`
 	CountryISO2   string `json:"countryISO2"`
@@ -25,9 +25,9 @@ type attached_swift struct {
 }
 
 type Endpoint2 struct {
-	CountryISO2 string           `json:"countryISO2"`
-	CountryName string           `json:"countryName"`
-	SwiftCodes  []attached_swift `json:"swiftCodes"`
+	CountryISO2 string          `json:"countryISO2"`
+	CountryName string          `json:"countryName"`
+	SwiftCodes  []AttachedSwift `json:"swiftCodes"`
 }
 
 type Endpoint3_request struct {
@@ -54,9 +54,9 @@ type Message_response struct {
 // }
 
 func Build_HQB_response(headquarter_SC models.SwiftCode, branches []models.SwiftCode) Endpoint1_Headquarter {
-	var branchList []attached_swift
+	var branchList []AttachedSwift
 	for _, b := range branches {
-		branchList = append(branchList, attached_swift{
+		branchList = append(branchList, AttachedSwift{
 			Address:       b.Address,
 			BankName:      b.BankName,
 			CountryISO2:   b.CountryISO2,
@@ -76,9 +76,9 @@ func Build_HQB_response(headquarter_SC models.SwiftCode, branches []models.Swift
 }
 
 func BuildEndpoint2Response(countryISO2, countryName string, swiftCodes []models.SwiftCode) Endpoint2 {
-	var swiftCodesResponse []attached_swift
+	var swiftCodesResponse []AttachedSwift
 	for _, c := range swiftCodes {
-		swiftCodesResponse = append(swiftCodesResponse, attached_swift{
+		swiftCodesResponse = append(swiftCodesResponse, AttachedSwift{
 			Address:       c.Address,
 			BankName:      c.BankName,
 			CountryISO2:   c.CountryISO2,
