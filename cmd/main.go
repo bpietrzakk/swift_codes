@@ -9,16 +9,15 @@ import (
 )
 
 func main() {
-	database.Connect() // connect to database and create tables in database
+	database.ConnectDatabase() // connect to database and create tables in database
 
 	// parse the data from csv data
-	parserData , err := parser.ParseSwiftCodesCSV("internal/data/Interns_2025_SWIFT_CODES - Sheet1.csv")
+	parserData, err := parser.ParseSwiftCodesCSV("internal/data/Interns_2025_SWIFT_CODES - Sheet1.csv")
 	if err != nil {
 		panic(err)
 	}
 
 	database.LoadSwiftCodesToDB(parserData)
-
 
 	// --------------API--------------
 	// start api
@@ -36,7 +35,7 @@ func main() {
 		// database.DB.Limit(1).Find(&example)
 		// c.JSON(200, example)
 		c.JSON(200, gin.H{
-			"message":"Witaj świecie!",
+			"message": "Witaj świecie!",
 		})
 	})
 

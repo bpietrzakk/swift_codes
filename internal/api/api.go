@@ -119,30 +119,39 @@ func RegisterEndpoint3(r *gin.Engine) {
 
 		// check if swift code already exist
 		var existing models.SwiftCode
-		if err := database.DB.Where("swift_code = ?", request.SwiftCode).First(&existing).Error; err == nil {
-			c.JSON(400, responses.Message_response{
-				Message: "swift code already exist",
-			})
-		}
+		result := database.DB.Where("swift_code = ?", request.SwiftCode).First(&existing)
 
-		newSwift := models.SwiftCode{
-			Address:       request.Address,
-			BankName:      request.BankName,
-			CountryISO2:   request.CountryISO2,
-			CountryName:   request.CountryName,
-			IsHeadquarter: request.IsHeadquarter,
-			SwiftCode:     request.SwiftCode,
-		}
+		if result.Error != nil {
+			if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+				newSwift := models.SwiftCode{
+					Address:       request.Address,
+					BankName:      request.BankName,
+					CountryISO2:   request.CountryISO2,
+					CountryName:   request.CountryName,
+					IsHeadquarter: request.IsHeadquarter,
+					SwiftCode:     request.SwiftCode,
+				}
 
-		if err := database.DB.Create(&newSwift).Error; err != nil {
+				if err := database.DB.Create(&newSwift).Error; err != nil {
+					c.JSON(500, responses.Message_response{
+						Message: "Failed to create Swift code",
+					})
+					return
+				}
+
+				c.JSON(201, responses.Message_response{
+					Message: "Swift code added successfully",
+				})
+				return
+			}
+
 			c.JSON(500, responses.Message_response{
-				Message: "Database error: " + err.Error(),
+				Message: "Database error",
 			})
 			return
 		}
-
-		c.JSON(201, responses.Message_response{
-			Message: "Swift code added successfully",
+		c.JSON(400, responses.Message_response{
+			Message: "swift code already exist",
 		})
 	})
 }
