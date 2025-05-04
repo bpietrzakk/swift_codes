@@ -33,8 +33,10 @@ func ParseSwiftCodesCSV(filepath string) ([]models.SwiftCode, error) {
 		return nil, fmt.Errorf("invalid CSV header")
 	}
 
-	for _, record := range records[1:] { // Start from the second row
-
+	for i, record := range records[1:] { // Start from the second row
+		if len(record) < 8 {
+			return nil, fmt.Errorf("row %d has %d columns (expected 8)", i + 1, len(record))
+		}
 		swiftCode := models.SwiftCode{
 			CountryISO2:	record[0],
 			SwiftCode: record[1],

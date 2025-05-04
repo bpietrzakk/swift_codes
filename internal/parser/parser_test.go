@@ -8,7 +8,7 @@ import (
 )
 
 func TestParseSwiftCodesCSV(t *testing.T) {
-	csvPath := "../data/test.csv"
+	csvPath := "../data/test/test.csv"
 
 	result, err := ParseSwiftCodesCSV(csvPath)
 	if err != nil {
@@ -147,5 +147,27 @@ func TestParseSwiftCodesCSV_Empty(t *testing.T) {
 }
 
 func TestParseSwiftCodesCSV_InvalidHeader(t *testing.T){
+	csvPath := "../data/test/invalidHeader_test.csv"
 
+	expextedError := "invalid CSV header"
+	_, err := ParseSwiftCodesCSV(csvPath)
+	if err == nil {
+		t.Fatalf("Expected error: %q", expextedError)
+	}
+	if !strings.Contains(err.Error(), expextedError){
+		t.Errorf("Expected error: %q, got: %q", expextedError, err.Error())
+	}
+}
+
+func TestParseSwiftCodesCSV_UnexistingFile(t *testing.T){
+	csvPath := "../data/test/UnExistingFile.csv"
+
+	expextedError := "failed to open file: "
+	_, err := ParseSwiftCodesCSV(csvPath)
+	if err == nil {
+		t.Fatalf("Expected error: %q", expextedError)
+	}
+	if !strings.Contains(err.Error(), expextedError){
+		t.Errorf("Expected error: %q, got: %q", expextedError, err.Error())
+	}
 }
