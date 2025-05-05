@@ -21,7 +21,7 @@ A simple RESTful API for managing SWIFT (BIC) code data. Built with Go and Postg
 ## **Installation and setup**
 1. Clone my repository in your chosen place:
 ```bash
-git clone github.com/bpietrzakk/swift_codes
+git clone http://github.com/bpietrzakk/swift_codes
 ```
 ```bash
 cd swift_codes
