@@ -30,10 +30,12 @@ cd swift_codes
 ```bash
 docker build -t swift_codes .
 ```
-4. Run the app with Docker Compose:  
+4. Run the app with Docker Compose:   
 ```bash
 docker-compose up --build
 ```
+*Note: Occasionally, a database connection error may occur on startup. If this happens, simply stop the process (Ctrl+C) and rerun the command.*  
+  
 *If you are on windows: a window will pop up with permission etc, allow it and then run the command again*  
   
 The API will be available at: http://localhost:8080  
@@ -46,6 +48,10 @@ go test ./internal/parser
 ```bash
 go test ./internal/responeses
 ```
+```bash
+go test ./internal/integration_test
+```
+*Known issue: The final test fails from the terminal but passes in the VS Code UI. The endpoint itself returns the expected result when tested manually.*  
 
 
 ## Stopping and removing containers:
