@@ -9,3 +9,9 @@ docker-compose up --build
 
 to stop:
 docker-compose down
+
+to run test:
+(in repository)
+go test ./internal/parser
+go test ./internal/responeses
+
