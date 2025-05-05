@@ -18,7 +18,9 @@ A simple RESTful API for managing SWIFT (BIC) code data. Built with Go and Postg
 - Docker Compose
 - Git
 
-## **Installation and setup**
+## **Installation and setup**  
+*if you are on Windows, use Powershell*  
+In your terminal:
 1. Clone my repository in your chosen place:
 ```bash
 git clone http://github.com/bpietrzakk/swift_codes
