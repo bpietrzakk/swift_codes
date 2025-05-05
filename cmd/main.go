@@ -12,7 +12,7 @@ func main() {
 	database.ConnectDatabase() // connect to database and create tables in database
 
 	// parse the data from csv data
-	parserData, err := parser.ParseSwiftCodesCSV("internal/data/Interns_2025_SWIFT_CODES - Sheet1.csv")
+	parserData, err := parser.ParseSwiftCodesCSV("/internal/data/Interns_2025_SWIFT_CODES.csv")
 	if err != nil {
 		panic(err)
 	}

@@ -1,0 +1,35 @@
+# docker-compose.yml
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # from container to host
+    environment:
+      DB_HOST: db     # Nazwa usługi bazy danych w tym samym pliku Compose
+      DB_PORT: 5432
+      DB_USER: bartek
+      DB_PASSWORD: "qwer1234"
+      DB_NAME: swift_codes
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: bartek
+      POSTGRES_PASSWORD: "qwer1234"
+      POSTGRES_DB: swift_codes
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bartek -d swift_codes"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres_data:
