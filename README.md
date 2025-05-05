@@ -13,9 +13,7 @@ A simple RESTful API for managing SWIFT (BIC) code data. Built with Go and Postg
 - **dotenv** – environment variable management
 
 ## **Prerequisites**
-- Golang
 - Docker
-- Docker Compose
 - Git
 
 ## **Installation and setup**  
@@ -36,7 +34,9 @@ docker build -t swift_codes .
 ```bash
 docker-compose up --build
 ```
-*The API will be available at: http://localhost:8080*  
+*If you are on windows: a window will pop up with permission etc, allow it and then run the command again*  
+  
+The API will be available at: http://localhost:8080  
 
 ## **Running tests**
 In repository location
