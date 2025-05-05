@@ -19,7 +19,7 @@ A simple RESTful API for managing SWIFT (BIC) code data. Built with Go and Postg
 ## **Installation and setup**  
 *if you are on Windows, use Powershell*  
 In your terminal:
-1. Clone my repository in your chosen place:
+1. Clone repository:
 ```bash
 git clone http://github.com/bpietrzakk/swift_codes
 ```
@@ -53,10 +53,30 @@ go test ./internal/integration_test
 ```
 *Known issue: The final test fails from the terminal but passes in the VS Code UI. The endpoint itself returns the expected result when tested manually.*  
 
+I have implemented a few integration tests for the GET endpoints. These tests check basic functionality, ensuring that the API returns the expected HTTP status codes and responses.  
+  
+However, I have not yet written tests for all endpoints, as I am still learning about integration testing. I plan to improve my knowledge and add more tests in the future.
+
 
 ## Stopping and removing containers:
 ```bash
 docker-compose down
 ```
 
+## What I Learned
+This project helped me improve in several key areas:
+- Building REST APIs in Go using Gin and GORM
+- Dockerizing applications and using Docker Compose
+- Working with PostgreSQL 
+- Parsing CSV files in Go
+- Writing basic unit and integration tests
+- Structuring a clean Go project with packages  
+  
+## Feedback
+I'm open to feedback and suggestions! Feel free to reach out via issues or contact me directly.  
+
+
+
+
+It also helped me understand how real-world backend systems are developed and tested.
 
