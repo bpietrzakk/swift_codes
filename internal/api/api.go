@@ -76,14 +76,15 @@ func RegisterEndpoint2(r *gin.Engine) {
 		fmt.Println("Searching for countryISO2:", countryISO2)
 
 		result := database.DB.Where("country_ISO2 = ?", countryISO2).Find(&wanted_swift)
-		if result.RowsAffected == 0 {
-			c.JSON(404, gin.H{"error": "No Swift codes found for this country"})
-			return
-		}
 		if result.Error != nil {
 			c.JSON(500, gin.H{"error": "Database error"})
 			return
 		}
+		if result.RowsAffected == 0 {
+			c.JSON(404, gin.H{"error": "No Swift codes found for this country"})
+			return
+		}
+		
 
 		response := responses.BuildEndpoint2Response(countryISO2, wanted_swift[0].CountryName, wanted_swift)
 		c.JSON(200, response)
