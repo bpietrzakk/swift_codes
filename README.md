@@ -68,15 +68,8 @@ This project helped me improve in several key areas:
 - Building REST APIs in Go using Gin and GORM
 - Dockerizing applications and using Docker Compose
 - Working with PostgreSQL 
-- Parsing CSV files in Go
 - Writing basic unit and integration tests
 - Structuring a clean Go project with packages  
   
 ## Feedback
 I'm open to feedback and suggestions! Feel free to reach out via issues or contact me directly.  
-
-
-
-
-It also helped me understand how real-world backend systems are developed and tested.
-
