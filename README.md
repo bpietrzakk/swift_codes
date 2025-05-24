@@ -1,6 +1,4 @@
- # **Remitly Internship 2025 Homework Task**
-
-## **Swift Codes API**
+# **Swift Codes API**
 
 A simple RESTful API for managing SWIFT (BIC) code data. Built with Go and PostgreSQL, containerized using Docker.
 
@@ -40,6 +38,127 @@ docker-compose up --build
   
 The API will be available at: http://localhost:8080  
 
+
+## **Endpoints**
+### **GET:**  
+```bash
+/v1/swift-codes/:swift_code
+```  
+Description:  
+Retrieves a JSON object containing the details of a specific bank by its ID.  
+If the bank is a headquarter, the response also includes the parameters of all its branches.  
+
+Response Example:
+```bash
+{
+  "address": "123 Main Street",
+  "bankName": "National Bank",
+  "countryISO2": "PL",
+  "countryName": "Poland",
+  "isHeadquarter": true,
+  "swiftCode": "NATBPLPWXXX",
+  "branches": [
+    {
+      "address": "Branch Street 1",
+      "bankName": "National Bank Branch Krakow",
+      "countryISO2": "PL",
+      "isHeadquarter": false,
+      "swiftCode": "NATBPLPWKRK"
+    },
+    {
+      "address": "Branch Avenue 2",
+      "bankName": "National Bank Branch Gdansk",
+      "countryISO2": "PL",
+      "isHeadquarter": false,
+      "swiftCode": "NATBPLPWDAN"
+    }
+  ]
+}
+
+```  
+
+### **GET:**  
+```bash
+/v1/swift-codes/country/:countryISO2code
+```  
+Description:  
+Returns a list of all banks located in the country specified by the ISO 3166-1 alpha-2 code (ISO2).  
+  
+Response Example:
+```bash
+{
+  "countryISO2": "PL",
+  "countryName": "Poland",
+  "swiftCodes": [
+    {
+      "address": "123 Main Street",
+      "bankName": "National Bank",
+      "countryISO2": "PL",
+      "isHeadquarter": true,
+      "swiftCode": "NATBPLPWXXX"
+    },
+    {
+      "address": "Branch Street 1",
+      "bankName": "National Bank Branch Krakow",
+      "countryISO2": "PL",
+      "isHeadquarter": false,
+      "swiftCode": "NATBPLPWKRK"
+    },
+    {
+      "address": "456 Central Ave",
+      "bankName": "Polish Savings Bank",
+      "countryISO2": "PL",
+      "isHeadquarter": true,
+      "swiftCode": "POLBPLPWXXX"
+    }
+  ]
+}
+```  
+
+
+### **POST:**  
+```bash
+/v1/swift-codes
+```
+Description:  
+Adds a new bank to the database.  
+If a bank with the same unique identifier already exists, the operation is ignored or rejected.  
+
+Rexuest Body Example:
+```bash
+{
+  "address": "123 Main Street",
+  "bankName": "National Bank",
+  "countryISO2": "PL",
+  "countryName": "Poland",
+  "isHeadquarter": true,
+  "swiftCode": "NATBPLPWXXX"
+}
+
+```  
+Success Response Example:  
+```bash
+{
+  "message": "Bank successfully added."
+}
+```    
+
+### **DELETE:**  
+```bash
+/v1/swift-codes/:swiftCode
+```  
+Description:  
+Deletes a bank from the database by its ID, but only if it exists.  
+
+Success Response Example:  
+```bash
+{
+  "message": "Bank successfully added."
+}
+```    
+  
+  
+  
 ## **Running tests**
 In repository location
 ```bash
